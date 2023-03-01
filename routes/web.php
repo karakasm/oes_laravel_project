@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,5 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', [AuthController::class,'index'])->name('login');
+Route::post('login',[AuthController::class,'handleLogin'])->name('handle.login');
 
-Route::view('/', 'login');
+Route::view('student/index','student.index')->middleware('auth')->name('student.index');
+Route::view('instructor/index', 'instructor.index')->middleware('auth')->name('instructor.index');

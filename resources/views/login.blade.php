@@ -25,12 +25,12 @@
             <h3 class="m-0">Eğitmen/Öğrenci Alanı <span class="text-light-emphasis h4">Hesap Giriş</span></h3>
         </div>
     </header>
-
     <main id="main" class="container-fluid m-0">
         <div class="row bg-light justify-content-center align-items-center py-3" style="height:71vh;">
             <div class="col-12 col-md-4">
-                <form action="#" method="POST" class="py-5 px-3 rounded-3 shadow border border-1 needs-validation"
+                <form action="{{ route('handle.login') }}" method="POST" class="py-5 px-3 rounded-3 shadow border border-1 needs-validation"
                     novalidate>
+                    @csrf
                     <div class="form-floating mb-4">
                         <input type="text" class="form-control shadow-none" name="username" id="username"
                             placeholder="Kullanıcı Adı" pattern="^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{5,}" required>
