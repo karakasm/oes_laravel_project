@@ -14,7 +14,7 @@
 </head>
 
 <body class="min-vh-100">
-    <nav class="navbar bg-primary bg-opacity-75">
+    <nav class="navbar bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand text-white" href="#">Çevrimiçi Eğitim Sistemi</a>
         </div>
@@ -25,10 +25,12 @@
             <h3 class="m-0">Eğitmen/Öğrenci Alanı <span class="text-light-emphasis h4">Hesap Giriş</span></h3>
         </div>
     </header>
+
+
     <main id="main" class="container-fluid m-0">
         <div class="row bg-light justify-content-center align-items-center py-3" style="height:71vh;">
             <div class="col-12 col-md-4">
-                <form action="{{ route('handle.login') }}" method="POST" class="py-5 px-3 rounded-3 shadow border border-1 needs-validation"
+                <form action="{{ route('handle.login') }}" method="POST" class="py-5 px-3 mb-2 rounded-3 shadow border border-1 needs-validation"
                     novalidate>
                     @csrf
                     <div class="form-floating mb-4">
@@ -59,6 +61,11 @@
                         <input type="submit" class="btn btn-outline-primary w-50" value="Giriş">
                     </div>
                 </form>
+                @if(\Illuminate\Support\Facades\Session::has('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ \Illuminate\Support\Facades\Session::get('error') }}
+                    </div>
+                @endif
             </div>
         </div>
     </main>
