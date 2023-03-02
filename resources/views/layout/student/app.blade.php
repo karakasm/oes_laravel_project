@@ -15,7 +15,7 @@
 <body>
 
 <!--navbar starts-->
-<nav class="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark">
     <div class="container-fluid">
         <!--offcanvas trigger starts-->
         <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas"
@@ -23,8 +23,7 @@
             <span class="navbar-toggler-icon" data-bs-target="#offcanvasScrolling"></span>
         </button>
         <!--offcanvas trigger ends-->
-        <a class="navbar-brand me-auto fs-5" href="#">
-
+        <a class="navbar-brand me-auto fs-5" href="{{ route('instructor.index') }}">
             Çevrimiçi Eğitim
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -34,25 +33,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link mx-3" id="bildirim" href="#" data-bs-toggle="tooltip"
-                       data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
-                       data-bs-title="Bildirimler">
-                        <i class="uil uil-bell"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link mx-2 d-flex align-items-center" id="profil" data-bs-toggle="tooltip"
-                       data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="Profil">
+                <li class="nav-item dropdown mt-3 mt-lg-0">
+                    <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-person-fill"></i>
-                        <span style="font-size:14px;">kullanıcıAdı</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link mx-3" id="profil" data-bs-toggle="tooltip"
-                       data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="Logout">
-                        <i class="uil uil-signout"></i>
-                    </a>
+                        <span style="font-size:14px;">
+                            @if(session()->has('user'))
+                                {{ session('user.username') }}
+                            @else
+                                Kullanıcı Ad Soyadı
+                            @endif
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><button class="dropdown-item" type="button">Bildirimler <span class="badge text-bg-primary">4</span></button></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ route('handle.logout') }}" role="button">Çıkış <i class="uil uil-signout" style="color: var(--red);"></i></a></li>
+                    </ul>
                 </li>
             </ul>
         </div>
