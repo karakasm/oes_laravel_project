@@ -13,22 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('role_id')->unsigned();
-            $table->string('name');
-            $table->string('surname');
-            $table->string('username')->unique();
-            $table->string('password');
+        Schema::create('course_user', function (Blueprint $table)
+        {
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('course_id')->unsigned();
             $table->timestamps();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
-
         });
 
-        Schema::table('users', function (Blueprint $table){
-            $table->foreign('role_id')->references('id')->on('roles');
+        Schema::table('course_user', function (Blueprint $table){
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('course_id')->references('id')->on('courses');
+            $table->primary(['user_id','course_id']);
         });
     }
 
@@ -39,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('course_user');
     }
 };

@@ -18,25 +18,32 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
+                'role_id' => 3,
                 'name' => 'Turab',
                 'surname' => 'Karakaş',
                 'username' => 'karakasm18',
-                'role' => 'student',
                 'password' => Hash::make('Mx8pkMe0FC')
             ],
             [
+                'role_id' => 3,
                 'name' => 'Akif',
                 'surname' => 'Mete',
                 'username' => 'mete16',
-                'role' => 'student',
                 'password' => Hash::make('Nwakaeme61')
             ],
             [
+                'role_id' => 2,
                 'name' => 'Sultan',
                 'surname' => 'Erdoğan',
                 'username' => 'erdogan15',
-                'role' => 'instructor',
                 'password' => Hash::make('Serdogan15')
+            ],
+            [
+                'role_id' => 2,
+                'name' => 'İzzet',
+                'surname' => 'Göksel',
+                'username' => 'gokseli10',
+                'password' => Hash::make('Gokseliz10')
             ]
         ];
 

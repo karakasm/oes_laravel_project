@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('styles/style.css') }}">
-    @yield('scripts')
+    @yield('styles')
 </head>
 <body>
 
@@ -23,7 +23,7 @@
             <span class="navbar-toggler-icon" data-bs-target="#offcanvasScrolling"></span>
         </button>
         <!--offcanvas trigger ends-->
-        <a class="navbar-brand me-auto fs-5" href="{{ route('instructor.index') }}">
+        <a class="navbar-brand me-auto fs-5" href="{{ route('student.index') }}">
             Çevrimiçi Eğitim
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -63,7 +63,7 @@
         <nav class="navbar-dark">
             <ul class="navbar-nav">
                 <li>
-                    <a href="#" class="nav-link px-3 active">
+                    <a href="{{ route('student.index') }}" class="nav-link px-3 {{ request()->is('student/index') ? "active" : "" }}">
                         <span class="me-2 link-icon"><i class="uil uil-estate"></i></span>
                         <span class="link-name">Panel</span>
                     </a>
@@ -71,48 +71,28 @@
                 <li class="mt-4">
                     <div class="small fw-bold" style="color: var(--gray-600);">Sınıflar</div>
                 </li>
-                <li>
-                    <div class="px-3 d-flex align-items-center sidebar-link">
-                        <span class="me-3 link-icon"><i class="uil uil-subject"></i></span>
-                        <span class="link-name">Sınıf Adı 1</span>
-                    </div>
-                    <ul class="navbar-nav ps-3">
+                @if(count(session('courses')))
+                    @foreach(session('courses') as $course)
                         <li>
-                            <a href="#" class="nav-link px-3">
-                                <span class="link-icon"><i class="uil uil-navigator"></i></span>
-                                <span class="link-name">Kod:652</span>
-                            </a>
+                            <div class="px-3 d-flex align-items-center sidebar-link">
+                                <span class="me-3 link-icon"><i class="uil uil-subject"></i></span>
+                                <span class="link-name">{{ $course->code." ".$course->number }}</span>
+                            </div>
+                            <ul class="navbar-nav ps-3">
+                                <li>
+                                    <a href="{{ route('student.course.index', ['id' => $course->id]) }}" class="nav-link px-3 {{request()->is('student/courses/'.$course->id) ? "active" : ""}}">
+                                        <span class="link-icon"><i class="uil uil-navigator"></i></span>
+                                        <span class="link-name" data-bs-toggle="popover" data-bs-placement="right" data-bs-trigger="hover focus"   data-bs-title="{{$course->name}}" data-bs-content="">{{ "Crn: ".$course->id }}</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                    </ul>
-                </li>
-                <li>
-                    <div class="px-3 d-flex align-items-center sidebar-link">
-                        <span class="me-3 link-icon"><i class="uil uil-subject"></i></span>
-                        <span class="link-name">Sınıf Adı 2</span>
-                    </div>
-                    <ul class="navbar-nav ps-3">
                         <li>
-                            <a href="#" class="nav-link px-3">
-                                <span class="link-icon"><i class="uil uil-navigator"></i></span>
-                                <span class="link-name">Kod:388E</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <div class="px-3 d-flex align-items-center sidebar-link">
-                        <span class="me-3 link-icon"><i class="uil uil-subject"></i></span>
-                        <span class="link-name">Sınıf Adı 3</span>
-                    </div>
-                    <ul class="navbar-nav ps-3">
-                        <li>
-                            <a href="#" class="nav-link px-3">
-                                <span class="link-icon"><i class="uil uil-navigator"></i></span>
-                                <span class="link-name">Kod:235</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                    @endforeach
+                @else
+                    <li class="mt-4">Kayıtlı bir dersiniz bulunmamaktadır.</li>
+                @endif
+
             </ul>
         </nav>
     </div>
@@ -121,6 +101,12 @@
 
 @yield('content')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+<script>
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+</script>
+
 @yield('scripts')
 </body>
 </html>

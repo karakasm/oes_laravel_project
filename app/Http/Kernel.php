@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use GuzzleHttp\Middleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Support\Facades\App;
 
@@ -65,5 +66,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'is_instructor' => \App\Http\Middleware\instructor\IsInstructorMiddleware::class,
+        'is_student' =>\App\Http\Middleware\student\IsStudentMiddleware::class,
     ];
 }
