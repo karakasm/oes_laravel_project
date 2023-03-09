@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Student\CourseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,5 +20,26 @@ Route::post('login',[AuthController::class,'handleLogin'])->name('handle.login')
 Route::get('logout',[AuthController::Class,'handleLogout'])->middleware('auth')->name('handle.logout');
 
 
-Route::view('student/index','student.index')->middleware('auth')->name('student.index');
-Route::view('instructor/index', 'instructor.index')->middleware('auth')->name('instructor.index');
+Route::prefix('student')->middleware(['auth','is_student'])->group(function () {
+    Route::view('index','student.index')->name('student.index');
+
+    //Routes about courses
+    Route::get('courses/{course}', [CourseController::class, 'index'])->name('student.course.index');
+    Route::get('courses/{course}/details',[CourseController::class,'show'])->name('student.course.detail');
+});
+
+
+Route::prefix('instructor')->middleware(['auth','is_instructor'])->group(function (){
+    Route::view('index', 'instructor.index')->name('instructor.index');
+
+    //Routes about courses
+    Route::get('courses/{course}',[\App\Http\Controllers\Instructor\CourseController::class,'index'])->name('instructor.course.index');
+    Route::get('courses/{course}/details', [\App\Http\Controllers\Instructor\CourseController::class,'show'])->name('instructor.course.detail');
+
+    //Routes about announcement
+    Route::get('announcement/create',[\App\Http\Controllers\Instructor\AnnouncementController::class,'create'])->name('instructor.announcement.create');
+});
+
+
+
+

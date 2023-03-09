@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginPostRequest;
+use App\Models\Course;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
     public function index()
     {
-
         return view('login');
     }
 
@@ -20,22 +22,40 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
 
+
         if (Auth::attempt($credentials)) {
 
-            $request->session()->regenerate();
+           $request->session()->regenerate();
 
             $user = Auth::user();
+
             Session::put('user', [
                 'user_id' => $user->id,
+                'role_id' => $user->role_id,
                 'name' => $user->name,
                 'surname' => $user->surname,
                 'username' => $user->username,
-                'role' => $user->role,
             ]);
 
-            if (Auth::user()->role === 'instructor') {
+
+            if (Auth::user()->role_id === Role::IS_INSTRUCTOR) {
+
+                $courses = Course::where('instructor_id',\session('user.user_id'))->orderBy('code')->orderBy('number')->orderBy('id')->get();
+                if($courses){
+                    Session::put('courses',$courses);
+                }else{
+                    Session::put('courser', null);
+                }
+
+
                 return redirect()->route('instructor.index');
-            } elseif (Auth::user()->role === 'student') {
+            } elseif (Auth::user()->role_id === Role::IS_STUDENT) {
+                $courses = User::findOrFail(\session('user.user_id'))->courses;
+                if($courses){
+                    Session::put('courses',$courses);
+                }else{
+                    Session::put('courses',null);
+                }
                 return redirect()->route('student.index');
             }
         } else {

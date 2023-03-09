@@ -1,15 +1,17 @@
 @extends('layout.student.app')
 
-@section('title')
-    Home
-@endsection
+@section('title','Home')
 
 @section('content')
     <!--main starts-->
-    <main class="pt-3">
+    <main class="pt-3 mb-5">
         <div class="container-fluid">
             <div class="row">
-                <h3 class="col-md-12 fw-bold">Panel</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active fs-4" aria-current="page">Panel</li>
+                    </ol>
+                </nav>
             </div>
             <div class="row py-3">
                 <div class="col-lg-6">

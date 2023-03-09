@@ -11,6 +11,16 @@ class User extends Authenticatable
     use HasFactory;
 
     protected $fillable = [
-        'name','surname','username','role','password'
+        'name','role_id','surname','username','password'
     ];
+
+
+
+
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
+    public function courses(){
+       return $this->belongsToMany(Course::class,'course_user')->orderBy('code')->orderBy('number')->withTimestamps();
+    }
 }
