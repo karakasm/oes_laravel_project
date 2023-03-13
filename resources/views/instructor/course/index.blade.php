@@ -36,7 +36,7 @@
                     <div class="card text-white my-3 mb-lg-0 bg-warning border-0">
                         <div class="card-body row">
                             <div class="col-8 d-flex flex-column justify-content-between">
-                                <h4 class="card-title">20</h4>
+                                <h4 class="card-title">{{ count($course->announcements) }}</h4>
                                 <p class="card-text">Duyurular</p>
                             </div>
                             <div class="col-4">
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-white text-center">
-                            <a href="#" class="text-white text-decoration-none">
+                            <a href="{{route('courses.announcements.index',['course'=>$course])}}" class="text-white text-decoration-none">
                                 <span class="link-name">Detay Göster</span>
                                 <i class="uil uil-arrow-circle-right link-icon"></i>
                             </a>

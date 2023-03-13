@@ -5,12 +5,15 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title') - Instructor - ÇES</title>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    @livewireStyles
     <link rel="stylesheet" href="{{ asset('styles/style.css') }}">
     @yield('styles')
+
 </head>
 <body>
 
@@ -83,7 +86,7 @@
                         @if($index != 0 && $course->number." ".$course->code == session('courses')[$index-1]->number." ".session('courses')[$index-1]->code)
                             <ul class="navbar-nav ps-3">
                                 <li>
-                                    <a href="{{ route('instructor.course.index',['id'=> $course->id]) }}" class="nav-link px-3 {{ request()->is('instructor/courses/'.$course->id) ? "active" : "" }}">
+                                    <a href="{{ route('instructor.course.index',['course'=> $course]) }}" class="nav-link px-3 {{ request()->is('instructor/courses/'.$course->id) ? "active" : "" }}">
                                         <span class="link-icon"><i class="uil uil-navigator"></i></span>
                                         <span class="link-name" data-bs-toggle="popover" data-bs-placement="right" data-bs-trigger="hover focus"   data-bs-title="{{$course->name}}" data-bs-content="">
                                             {{ "Crn: ".$course->id }}
@@ -130,6 +133,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+@livewireScripts
 <script>
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))

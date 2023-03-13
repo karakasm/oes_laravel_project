@@ -9,7 +9,10 @@ class Announcement extends Model
 {
     use HasFactory;
 
-    public function courses(){
-        return $this->belongsToMany(Course::class,'announcement_course')->withTimestamps();
+    protected $fillable = [
+      'course_id','title','content','status'
+    ];
+    public function course(){
+        return $this->belongsTo(Course::class);
     }
 }

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Crypt;
 
 class CourseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['course_auth']);
+    }
+
     public function index(Course $course){
         return view('student.course.index',['course' => $course]);
     }

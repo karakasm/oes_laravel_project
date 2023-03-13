@@ -22,6 +22,6 @@ class Course extends Model
     }
 
     public function announcements(){
-        return $this->belongsToMany(Announcement::class,'announcement_course')->withTimestamps();
+        return $this->hasMany(Announcement::class)->orderBy('created_at','desc');
     }
 }

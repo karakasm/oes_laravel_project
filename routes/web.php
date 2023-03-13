@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Instructor\AnnouncementController;
 use App\Http\Controllers\Student\CourseController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,7 @@ Route::get('logout',[AuthController::Class,'handleLogout'])->middleware('auth')-
 
 
 Route::prefix('student')->middleware(['auth','is_student'])->group(function () {
-    Route::view('index','student.index')->name('student.index');
+    Route::view('index','student.index')->middleware('get_all_requirements_stu')->name('student.index');
 
     //Routes about courses
     Route::get('courses/{course}', [CourseController::class, 'index'])->name('student.course.index');
@@ -30,14 +32,15 @@ Route::prefix('student')->middleware(['auth','is_student'])->group(function () {
 
 
 Route::prefix('instructor')->middleware(['auth','is_instructor'])->group(function (){
-    Route::view('index', 'instructor.index')->name('instructor.index');
+    Route::view('index', 'instructor.index')->middleware('get_all_requirements_ins')->name('instructor.index');
 
     //Routes about courses
     Route::get('courses/{course}',[\App\Http\Controllers\Instructor\CourseController::class,'index'])->name('instructor.course.index');
     Route::get('courses/{course}/details', [\App\Http\Controllers\Instructor\CourseController::class,'show'])->name('instructor.course.detail');
 
     //Routes about announcement
-    Route::get('announcement/create',[\App\Http\Controllers\Instructor\AnnouncementController::class,'create'])->name('instructor.announcement.create');
+    Route::resource('courses.announcements', AnnouncementController::class);
+    //Route::get('announcement/create',[\App\Http\Controllers\Instructor\AnnouncementController::class,'create'])->name('instructor.announcement.create');
 });
 
 

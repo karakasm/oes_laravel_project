@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginPostRequest;
+use App\Models\Announcement;
 use App\Models\Course;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -40,22 +43,9 @@ class AuthController extends Controller
 
             if (Auth::user()->role_id === Role::IS_INSTRUCTOR) {
 
-                $courses = Course::where('instructor_id',\session('user.user_id'))->orderBy('code')->orderBy('number')->orderBy('id')->get();
-                if($courses){
-                    Session::put('courses',$courses);
-                }else{
-                    Session::put('courser', null);
-                }
-
-
                 return redirect()->route('instructor.index');
             } elseif (Auth::user()->role_id === Role::IS_STUDENT) {
-                $courses = User::findOrFail(\session('user.user_id'))->courses;
-                if($courses){
-                    Session::put('courses',$courses);
-                }else{
-                    Session::put('courses',null);
-                }
+
                 return redirect()->route('student.index');
             }
         } else {

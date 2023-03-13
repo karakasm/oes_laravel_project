@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('instructor_id');
+            $table->unsignedInteger('course_id');
             $table->string('title');
             $table->text('content');
+            $table->enum('status',["pending","active"])->comment('pending:taslak,active:yayında');
             $table->timestamps();
         });
     }
