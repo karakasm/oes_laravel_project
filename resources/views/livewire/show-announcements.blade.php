@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="hstack gap-2">
                                     <small class="text-muted">{{$anno->course->code." ".$anno->course->number." - ".$anno->course->name." / CRN: ".$anno->course->id}}</small>
-                                    <a href="#" class="btn btn-sm btn-outline-primary ms-auto">Detay</a>
+                                    <a href="{{route('courses.announcements.show',['course'=>$anno->course,'announcement' => $anno])}}" class="btn btn-sm btn-outline-primary ms-auto">Detay</a>
                                     <a href="#" class="btn btn-sm btn-outline-success">Güncelle</a>
                                     <a href="#" class="btn btn-sm btn-outline-danger">Sil</a>
                                 </div>

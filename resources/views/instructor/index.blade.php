@@ -82,31 +82,3 @@
     </main>
 @endsection
 
-{{--@if(count(session('announcements')))
-    <div class="card-body table-responsive">
-        <table class="table table-sm table-bordered table-striped align-middle">
-            <caption><a href="#" class="link-danger">Tüm Duyurular</a></caption>
-            <thead>
-            <tr>
-                <th scope="col">Crn</th>
-                <th scope="col">Sınıf</th>
-                <th scope="col">Başlık</th>
-                <th scope="col">Tarih</th>
-                <th scope="col">Detay</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach(session('announcements') as $anno)
-                <tr>
-                    <td>{{$anno->course->id}}</td>
-                    <td>{{$anno->course->code." ".$anno->course->number}}</td>
-                    <td>{{$anno->title}}</td>
-                    <td>{{$anno->created_at->day." ".$anno->created_at->format("F")." ".$anno->created_at->hour.":".$anno->created_at->minute }}</td>
-                    <td><a href="#" class="btn btn-sm btn-outline-danger">Detay</a></td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
-@endif--}}
-

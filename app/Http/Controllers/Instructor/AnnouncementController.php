@@ -7,6 +7,7 @@ use App\Http\Requests\AnnouncementPostRequest;
 use App\Models\Announcement;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AnnouncementController extends Controller
 {
@@ -52,6 +53,8 @@ class AnnouncementController extends Controller
 
         $announcement->save();
 
+
+        Session::flash('success',$announcement->title." başlıklı duyuru ".$course->name.' isimli sınıfa başarıyla eklendi.');
         return redirect()->route('courses.announcements.index',['course' => $course]);
     }
 
@@ -61,9 +64,9 @@ class AnnouncementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Course $course,$anno)
     {
-        //
+        dd($ano);
     }
 
     /**

@@ -17,4 +17,29 @@
             <livewire:show-announcements :course="$course"/>
         </div>
     </main>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Çevrimiçi Eğitim Sistemi</strong>
+                <small>Az Önce</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{session('success')}}
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    <script>
+
+        $(document).ready(function() {
+            if ('{{session('success')}}'){
+                $('.toast').toast({delay:5000})
+                $('.toast').toast('show');
+            }
+        });
+    </script>
 @endsection

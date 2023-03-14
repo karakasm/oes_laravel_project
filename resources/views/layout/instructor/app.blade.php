@@ -124,7 +124,7 @@
                     </li>
                     <li>
                         <a href="{{route('courses.announcements.create',['course' => \Illuminate\Support\Facades\Route::current()->parameter('course')])}}"
-                           class="nav-link px-3">
+                           class="nav-link px-3 @if(request()->routeIs('courses.announcements.create')) active @else null @endif">
                             <span class="me-2 link-icon"><i class="uil uil-share"></i></span>
                             <span class="link-name">Duyuru Paylaş</span>
                         </a>
