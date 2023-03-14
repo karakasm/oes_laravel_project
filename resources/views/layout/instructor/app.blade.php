@@ -117,6 +117,27 @@
                     <li class="mt-4">Kayıtlı bir dersiniz bulunmamaktadır.</li>
                 @endif
             </ul>
+            @if(\Illuminate\Support\Facades\Request::is('instructor/courses/*'))
+                <ul class="navbar-nav">
+                    <li class="mt-4">
+                        <div class="small fw-bold" style="color: var(--gray-600);">İşlemler</div>
+                    </li>
+                    <li>
+                        <a href="{{route('courses.announcements.create',['course' => \Illuminate\Support\Facades\Route::current()->parameter('course')])}}"
+                           class="nav-link px-3">
+                            <span class="me-2 link-icon"><i class="uil uil-share"></i></span>
+                            <span class="link-name">Duyuru Paylaş</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                           class="nav-link px-3">
+                            <span class="me-2 link-icon"><i class="uil uil-plus"></i></span>
+                            <span class="link-name">Ödev Ekle</span>
+                        </a>
+                    </li>
+                </ul>
+            @endif
         </nav>
     </div>
 </div>

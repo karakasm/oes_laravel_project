@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Instructor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AnnouncementPostRequest;
+use App\Models\Announcement;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -23,9 +25,9 @@ class AnnouncementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Course $course)
     {
-        //
+        return view('instructor.course.announcement.create',['course'=>$course]);
     }
 
     /**
@@ -34,9 +36,23 @@ class AnnouncementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AnnouncementPostRequest $request, Course $course)
     {
-        //
+        $data = $request->validated();
+
+        $announcement = new Announcement();
+
+        $announcement->course_id = $course->id;
+
+        $announcement->title = htmlspecialchars($data['title']);
+
+        $announcement->content = htmlspecialchars($data['content']);
+
+        $announcement->status = $data['status'];
+
+        $announcement->save();
+
+        return redirect()->route('courses.announcements.index',['course' => $course]);
     }
 
     /**

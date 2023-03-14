@@ -27,11 +27,11 @@ class ShowAnnouncements extends Component
         if($this->search){
             $query->where('course_id',$this->course->id)
                 ->where('content','like','%'.$this->search.'%')
-            ->orWhere('title','like','%'.$this->search.'%');
+            ->orWhere('title','like','%'.$this->search.'%')->orderBy('updated_at','desc');
         }
 
         return view('livewire.show-announcements',[
-            'announcements'=> $query->where('course_id',$this->course->id)->paginate(3)
+            'announcements'=> $query->where('course_id',$this->course->id)->orderBy('updated_at','desc')->paginate(3)
         ]);
 
     }

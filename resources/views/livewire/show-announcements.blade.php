@@ -2,7 +2,7 @@
     <div class="col-12 col-lg-8 ">
         <div class="card border-0" style="transform: none;">
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h4>Duyurular</h4>
+                <h4 class="text-primary">Duyurular</h4>
                 <input type="text" wire:model="search" class="form-control w-50 shadow-none"
                        placeholder="Duyuru Bul...">
             </div>
@@ -12,12 +12,12 @@
                         @foreach($announcements as $anno)
                             <li class="list-group-item">
                                 <div class="d-flex mb-2 w-100 justify-content-between">
-                                    <h5>{{$anno->title}}</h5>
+                                    <h5>{!! $anno->title  !!}</h5>
                                     <p class="text-danger">{{$anno->status}}</p>
                                 </div>
                                 <div class="vstack gap-1">
                                     <small class="text-muted ">{{$anno->created_at->format("d F Y H:i")}}</small>
-                                    <p>{{\Illuminate\Support\Str::limit($anno->content,100)}}</p>
+                                    <p>{!! \Illuminate\Support\Str::limit(htmlspecialchars_decode($anno->content),150)  !!}  </p>
                                 </div>
                                 <div class="hstack gap-2">
                                     <small class="text-muted">{{$anno->course->code." ".$anno->course->number." - ".$anno->course->name." / CRN: ".$anno->course->id}}</small>

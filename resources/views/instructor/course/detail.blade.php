@@ -30,8 +30,8 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="card" style="transform: none;">
-                        <h5 class="card-header"> Sınıf Bilgileri </h5>
+                    <div class="card border-0" style="transform: none;">
+                        <h5 class="card-header text-bg-primary"> Sınıf Bilgileri </h5>
                         <div class="card-body table-responsive">
                             <table class="table table-borderless align-middle">
                                 <tbody>
