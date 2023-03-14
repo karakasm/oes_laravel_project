@@ -26,7 +26,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                {{session('success')}}
             </div>
         </div>
     </div>
@@ -36,10 +35,24 @@
     <script>
 
         $(document).ready(function() {
-            if ('{{session('success')}}'){
+
+                //Duyuru eklendi mesajını gösterir.
+            if ('{{\Illuminate\Support\Facades\Session::exists('message')}}'){
+                $('.toast-body').text('{{\Illuminate\Support\Facades\Session::pull('message')}}')
                 $('.toast').toast({delay:5000})
                 $('.toast').toast('show');
             }
+
+            //Duyuru silindi mesajını gösterir.
+            window.addEventListener('show-delete-alert',function (data){
+                console.log(data.detail.message);
+                $('.toast-body').text(data.detail.message)
+                $('.toast').toast({delay:5000})
+                $('.toast').toast('show');
+            });
+
         });
+
+
     </script>
 @endsection

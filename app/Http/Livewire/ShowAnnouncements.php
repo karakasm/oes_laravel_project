@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Announcement;
 use App\Models\Course;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,6 +16,8 @@ class ShowAnnouncements extends Component
     protected $paginationTheme = 'bootstrap';
 
     public  Course $course;
+
+    public $anno_id = '';
 
     public string $search = '';
 
@@ -40,6 +43,13 @@ class ShowAnnouncements extends Component
         if($property === 'search'){
             $this->resetPage();
         }
+    }
+    public function delete($id){
+        $this->anno_id = $id;
+    }
+    public function deleteConfirm(){
+        Announcement::where('id',$this->anno_id)->delete();
+        $this->dispatchBrowserEvent('show-delete-alert',['message' => 'Duyuru başarılı bir şekilde silindi.']);
     }
 
 }

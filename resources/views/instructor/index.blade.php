@@ -22,16 +22,24 @@
                             @if(count(session('announcements')))
                                 @foreach(session('announcements') as $anno)
                                     <div class="list-group list-group-flush">
-                                        <a href="#" class="list-group-item list-group-item-action">
+                                        <a href="{{route('courses.announcements.show',['course'=>session('courses')->where('id',$anno->course_id)->first(),'announcement' => $anno])}}" class="list-group-item list-group-item-action">
                                             <div class="d-flex w-100 justify-content-between">
                                                 <h5>{{$anno->title}}</h5>
                                                 <small class="text-muted">{{$anno->created_at->diffForHumans(\Illuminate\Support\Carbon::now())}}</small>
                                             </div>
-                                            <small class="text-muted">{{$anno->course->code." ".$anno->course->number." - ".$anno->course->name." / CRN: ".$anno->course->id}}</small>
+                                            <div class="d-flex flex-column align-items-start justify-content-between">
+                                                <small class="text-muted">{{$anno->course->code." ".$anno->course->number." - ".$anno->course->name." / CRN: ".$anno->course->id}}</small>
+                                                <small class="text-danger">{{$anno->status}}</small>
+                                            </div>
+
                                         </a>
                                         <hr class="m-0">
                                     </div>
                                 @endforeach
+                            @else
+                                <div class="list-group list-group-flush">
+                                   <li class="list-group-item">Paylaştığınız herhangi bir duyuru bulunmamaktadır.</li>
+                                </div>
                             @endif
                         </div>
                 </div>

@@ -54,7 +54,7 @@ class AnnouncementController extends Controller
         $announcement->save();
 
 
-        Session::flash('success',$announcement->title." başlıklı duyuru ".$course->name.' isimli sınıfa başarıyla eklendi.');
+        Session::put('message',$announcement->title." başlıklı duyuru ".$course->name.' isimli sınıfa başarıyla eklendi.');
         return redirect()->route('courses.announcements.index',['course' => $course]);
     }
 
@@ -64,9 +64,9 @@ class AnnouncementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course,$anno)
+    public function show(Course $course,Announcement $announcement)
     {
-        dd($ano);
+        return view('instructor.course.announcement.detail',['course'=>$course,'announcement' => $announcement]);
     }
 
     /**
@@ -75,9 +75,9 @@ class AnnouncementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Course $course, Announcement $announcement)
     {
-        //
+        return view('instructor.course.announcement.edit',['course'=>$course,'announcement'=>$announcement]);
     }
 
     /**
@@ -87,9 +87,22 @@ class AnnouncementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AnnouncementPostRequest $request, Course $course, Announcement $announcement)
     {
-        //
+        $data = $request->validated();
+
+        $announcement->course_id = $course->id;
+
+        $announcement->title = htmlspecialchars($data['title']);
+
+        $announcement->content = htmlspecialchars($data['content']);
+
+        $announcement->status = $data['status'];
+
+        $announcement->save();
+
+        Session::put('message','Duyuru başarılı bir şekilde güncellendi.');
+       return redirect()->route('courses.announcements.show',['course'=>$course,'announcement'=>$announcement]);
     }
 
     /**
@@ -98,8 +111,8 @@ class AnnouncementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Course $course, Announcement $announcement)
     {
-        //
+
     }
 }

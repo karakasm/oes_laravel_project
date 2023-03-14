@@ -22,15 +22,15 @@
                                 <div class="hstack gap-2">
                                     <small class="text-muted">{{$anno->course->code." ".$anno->course->number." - ".$anno->course->name." / CRN: ".$anno->course->id}}</small>
                                     <a href="{{route('courses.announcements.show',['course'=>$anno->course,'announcement' => $anno])}}" class="btn btn-sm btn-outline-primary ms-auto">Detay</a>
-                                    <a href="#" class="btn btn-sm btn-outline-success">Güncelle</a>
-                                    <a href="#" class="btn btn-sm btn-outline-danger">Sil</a>
+                                    <a href="{{route('courses.announcements.edit',['course'=>$anno->course,'announcement' => $anno])}}" class="btn btn-sm btn-outline-success">Güncelle</a>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" wire:click.prevent = "delete({{$anno->id}})" data-bs-toggle="modal" data-bs-target="#deleteModal">Sil</button>
                                 </div>
                             </li>
                             <hr class="m-0">
                         @endforeach
                     @else
                         <div class="alert alert-info" role="alert">
-                            İlgili sınıfa ait bir duyuru bulunmamaktadır!
+                            İlgili sınıfa/sorguya ait bir duyuru bulunmamaktadır!
                         </div>
                     @endif
                 </div>
@@ -39,5 +39,28 @@
         </div>
         {{ $announcements->links() }}
     </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" wire:ignore.self id="deleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Silme İşlemi Onaylama</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Duyuruyu silmek istediğine emin misin?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Hayır, Silme</button>
+                    <button type="button" id="modal-delete-btn" wire:click.prevent="deleteConfirm()" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Evet, Sil</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 
