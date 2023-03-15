@@ -28,6 +28,14 @@ Route::prefix('student')->middleware(['auth','is_student'])->group(function () {
     //Routes about courses
     Route::get('courses/{course}', [CourseController::class, 'index'])->name('student.course.index');
     Route::get('courses/{course}/details',[CourseController::class,'show'])->name('student.course.detail');
+
+    //Routes about announcement
+    Route::resource('courses.announcements',\App\Http\Controllers\Student\AnnouncementController::class)->only([
+        'index','show'
+    ])->names([
+        'index' => 'student.courses.announcements.index',
+        'show' => 'student.courses.announcements.show',
+    ]);
 });
 
 
@@ -40,7 +48,6 @@ Route::prefix('instructor')->middleware(['auth','is_instructor'])->group(functio
 
     //Routes about announcement
     Route::resource('courses.announcements', AnnouncementController::class);
-    //Route::get('announcement/create',[\App\Http\Controllers\Instructor\AnnouncementController::class,'create'])->name('instructor.announcement.create');
 });
 
 

@@ -29,7 +29,7 @@
             <div class="row">
                <div class="col">
                 <div class="card" style="transform: none;">
-                    <h5 class="card-header">Ders Bilgileri</h5>
+                    <h5 class="card-header text-bg-primary">Sınıf Bilgileri</h5>
                     <div class="card-body table-responsive">
                         <table class="table table-borderless">
                             <tbody>
@@ -85,7 +85,7 @@
                                         <tr>
                                             <td>{{ $course->language }}</td>
                                             <td>{{ $course->credit }}</td>
-                                            <td>{{ $course->enrolled }}</td>
+                                            <td>{{count($course->users)}}</td>
                                         </tr>
                                         </tbody>
                                     </table>

@@ -13,106 +13,72 @@
                     </ol>
                 </nav>
             </div>
-            <div class="row py-3">
-                <div class="col-lg-6">
-                    <div class="py-2 px-3" style="background-color: var(--gray-400);">
-                        <span class="fw-bold fs-5"><i class="uil uil-table"></i></span>
-                        <span class="fw-bold fs-5">Son Duyurular</span>
+            <div class="row gy-5 gx-3">
+                <div class="col-12 col-md-4">
+                    <div class="card border-0 text-bg-success " style="transform: none;">
+                        <h5 class="card-header">
+                            Son Duyurular
+                        </h5>
+                        @if(count(session('announcements')))
+                            @foreach(session('announcements') as $anno)
+                                <div class="list-group list-group-flush">
+                                    <a href="{{route('student.courses.announcements.show',['course'=>session('courses')->where('id',$anno->course_id)->first(),'announcement'=>$anno])}}" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5>{{$anno->title}}</h5>
+                                            <small class="text-muted">{{$anno->created_at->diffForHumans(\Illuminate\Support\Carbon::now())}}</small>
+                                        </div>
+                                        <small class="text-muted">{{$anno->course->code." ".$anno->course->number." - ".$anno->course->name." / CRN: ".$anno->course->id}}</small>
+                                    </a>
+                                    <hr class="m-0">
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="list-group list-group-flush">
+                                <li class="list-group-item">Herhangi bir duyuru bulunmamaktadır.</li>
+                            </div>
+                        @endif
                     </div>
-                    <table class="table table-bordered table-hover text-center">
-                        <thead>
-                        <tr>
-                            <th scope="col">Sınıf</th>
-                            <th scope="col">Başlık</th>
-                            <th scope="col">Tarih</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Sınıf 1</td>
-                            <td>Başlık 1</td>
-                            <td>05 Ocak 13:34</td>
-                        </tr>
-                        <tr>
-                            <td>Sınıf 2</td>
-                            <td>Başlık 2</td>
-                            <td>03 Ocak 12:00</td>
-                        </tr>
-                        <tr>
-                            <td>Sınıf 3</td>
-                            <td>Başlık 3</td>
-                            <td>30 Aralık 23:30</td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
-                <div class="col-lg-6">
-                    <div class="py-2 px-3" style="background-color: var(--gray-400);">
-                        <span class="fw-bold fs-5"><i class="uil uil-table"></i></span>
-                        <span class="fw-bold fs-5">Son Ödevler</span>
+                <div class="col-12 col-md-4">
+                    <div class="card border-0 text-bg-dark " style="transform: none;">
+                        <h5 class="card-header">
+                            Son Duyurular
+                        </h5>
+                        @if(count(session('announcements')))
+                            @foreach(session('announcements') as $anno)
+                                <div class="list-group list-group-flush">
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5>{{$anno->title}}</h5>
+                                            <small class="text-muted">{{$anno->created_at->diffForHumans(\Illuminate\Support\Carbon::now())}}</small>
+                                        </div>
+                                        <small class="text-muted">MAT 4902 - Matematik Müh. Tasarımı II / CRN: 21897</small>
+                                    </a>
+                                    <hr class="m-0">
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
-                    <table class="table table-bordered table-hover text-center">
-                        <thead>
-                        <tr>
-                            <th scope="col">Sınıf</th>
-                            <th scope="col">Başlık</th>
-                            <th scope="col">Tarih</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Sınıf 1</td>
-                            <td>Başlık 1</td>
-                            <td>05 Ocak 13:34</td>
-                        </tr>
-                        <tr>
-                            <td>Sınıf 2</td>
-                            <td>Başlık 2</td>
-                            <td>03 Ocak 12:00</td>
-                        </tr>
-                        <tr>
-                            <td>Sınıf 3</td>
-                            <td>Başlık 3</td>
-                            <td>30 Aralık 23:30</td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="fw-bold"> Son Duyurular
-                                <a href="#" class="btn btn-danger float-end">Hepsini Göster</a>
-                            </h4>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Sınıf</th>
-                                    <th scope="col">Başlık</th>
-                                    <th scope="col">Tarih</th>
-                                </tr>
-                                </thead>
-                                <tbody class="table-group-divider" style="border-top-color:black;">
-                                <tr>
-                                    <td>Sınıf 1</td>
-                                    <td>Başlık 1</td>
-                                    <td>05 Ocak 13:34</td>
-                                </tr>
-                                <tr>
-                                    <td>Sınıf 2</td>
-                                    <td>Başlık 2</td>
-                                    <td>03 Ocak 12:00</td>
-                                </tr>
-                                <tr>
-                                    <td>Sınıf 3</td>
-                                    <td>Başlık 3</td>
-                                    <td>30 Aralık 23:30</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="col-12 col-md-4">
+                    <div class="card border-0 text-bg-danger " style="transform: none;">
+                        <h5 class="card-header">
+                            Son Duyurular
+                        </h5>
+                        @if(count(session('announcements')))
+                            @foreach(session('announcements') as $anno)
+                                <div class="list-group list-group-flush">
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5>{{$anno->title}}</h5>
+                                            <small class="text-muted">{{$anno->created_at->diffForHumans(\Illuminate\Support\Carbon::now())}}</small>
+                                        </div>
+                                        <small class="text-muted">{{$anno->course->code." ".$anno->course->number." - ".$anno->course->name." - Crn: ".$anno->course->id}}</small>
+                                    </a>
+                                    <hr class="m-0">
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

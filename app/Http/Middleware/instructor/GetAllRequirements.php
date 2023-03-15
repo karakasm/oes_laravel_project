@@ -35,7 +35,7 @@ class GetAllRequirements
         }
 
         if($announcements){
-            Session::put('announcements',$announcements->sortByDesc('created_at')->take(3));
+            Session::put('announcements',$announcements->sortByDesc('updated_at')->take(3));
         }else{
             Session::put('announcements',null);
         }
