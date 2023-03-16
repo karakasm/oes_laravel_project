@@ -25,7 +25,7 @@
                                         <a href="{{route('courses.announcements.show',['course'=>session('courses')->where('id',$anno->course_id)->first(),'announcement' => $anno])}}" class="list-group-item list-group-item-action">
                                             <div class="d-flex w-100 justify-content-between">
                                                 <h5>{{$anno->title}}</h5>
-                                                <small class="text-muted">{{$anno->created_at->diffForHumans(\Illuminate\Support\Carbon::now())}}</small>
+                                                <small class="text-muted">{{$anno->updated_at->diffForHumans(\Illuminate\Support\Carbon::now())}}</small>
                                             </div>
                                             <div class="d-flex flex-column align-items-start justify-content-between">
                                                 <small class="text-muted">{{$anno->course->code." ".$anno->course->number." - ".$anno->course->name." / CRN: ".$anno->course->id}}</small>

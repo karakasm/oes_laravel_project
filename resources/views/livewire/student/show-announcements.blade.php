@@ -13,7 +13,7 @@
                             <li class="list-group-item">
                                 <h5 class="mb-2">{!! $anno->title  !!}</h5>
                                 <div class="vstack gap-1">
-                                    <small class="text-muted ">{{$anno->created_at->format("d F Y H:i")}}</small>
+                                    <small class="text-muted ">{{$anno->updated_at->format("d F Y H:i")}}</small>
                                     <p>{!! \Illuminate\Support\Str::limit(htmlspecialchars_decode($anno->content),150)  !!}  </p>
                                 </div>
                                 <div class="hstack gap-2">
