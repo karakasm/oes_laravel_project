@@ -13,7 +13,7 @@
                     </ol>
                 </nav>
             </div>
-            <div class="row gy-5 gx-3">
+            <div class="row gy-5 gx-3" id="cards">
                 <div class="col-12 col-md-4">
                     <div class="card border-0 text-bg-success " style="transform: none;">
                         <h5 class="card-header">
@@ -92,5 +92,16 @@
         //Tooltip
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+
+        $(document).ready(function(){
+            //Her 10 saniyede bir sayfayı yenilemeden sadece card kısımlarını yenileme.
+            setInterval(function (){
+                $.get('/student/index',function (data,status){
+                    $('#cards').empty();
+                    $('#cards').html($(data).find('#cards').html());
+                }) ;
+            },10000)
+        });
     </script>
 @endsection
