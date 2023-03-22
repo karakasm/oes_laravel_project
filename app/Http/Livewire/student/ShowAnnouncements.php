@@ -16,28 +16,31 @@ class ShowAnnouncements extends Component
     public Course $course;
 
     public string $search = '';
+    public $page = 1;
 
-    protected $queryString = ['search'];
+    protected $queryString = [
+        'search' => ['except' => '', 'as' => 's'],
+        'page' => ['except' => 1, 'as' => 'p'],
+    ];
 
     public function render()
     {
-        $query = Announcement::query();
-        if($this->search){
-            $query->where('course_id',$this->course->id)
-                ->where('status','active')
-                ->where('content','like','%'.$this->search.'%')
-                ->orWhere('title','like','%'.$this->search.'%')->orderBy('updated_at','desc');
+        $query = Announcement::query()->where('course_id', $this->course->id)
+            ->where('status', 'active');
+
+        if ($this->search) {
+            $query->where('content', 'like', '%' . $this->search . '%')
+                ->orWhere('title', 'like', '%' . $this->search . '%')->orderBy('updated_at', 'desc');
         }
 
-        return view('livewire.student.show-announcements',[
-            'announcements' => $query->where('course_id',$this->course->id)
-                ->where('status','active')
-                ->orderBy('updated_at','desc')->paginate(3)
+        return view('livewire.student.show-announcements', [
+            'announcements' => $query->orderBy('updated_at', 'desc')->paginate(3)
         ]);
     }
 
-    public function updated($property){
-        if($property === 'search'){
+    public function updated($property)
+    {
+        if ($property === 'search') {
             $this->resetPage();
         }
     }
