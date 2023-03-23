@@ -49,7 +49,3 @@ Route::prefix('instructor')->middleware(['auth','is_instructor'])->group(functio
     //Routes about announcement
     Route::resource('courses.announcements', AnnouncementController::class);
 });
-
-
-
-

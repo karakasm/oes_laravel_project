@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\Announcement;
+use App\Models\Course;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -16,6 +17,7 @@ class AnnouncementShared
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public Announcement $announcement;
+    public Course $course;
 
     /**
      * Create a new event instance.
@@ -23,9 +25,10 @@ class AnnouncementShared
      * @return void
      */
 
-    public function __construct(Announcement $announcement)
+    public function __construct(Announcement $announcement, Course $course)
     {
         $this->announcement = $announcement;
+        $this->course = $course;
     }
 
     /**

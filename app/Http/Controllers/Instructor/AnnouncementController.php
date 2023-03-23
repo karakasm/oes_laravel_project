@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Instructor;
 
+use App\Events\AnnouncementShared;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnouncementPostRequest;
 use App\Models\Announcement;
@@ -18,7 +19,7 @@ class AnnouncementController extends Controller
      */
     public function index(Course $course)
     {
-        return view('instructor.course.announcement.index',['course'=>$course]);
+        return view('instructor.course.announcement.index', ['course' => $course]);
     }
 
     /**
@@ -28,7 +29,7 @@ class AnnouncementController extends Controller
      */
     public function create(Course $course)
     {
-        return view('instructor.course.announcement.create',['course'=>$course]);
+        return view('instructor.course.announcement.create', ['course' => $course]);
     }
 
     /**
@@ -53,9 +54,10 @@ class AnnouncementController extends Controller
 
         $announcement->save();
 
+        AnnouncementShared::dispatchIf($announcement->status == 'active' ? true : false, $announcement, $course);
 
-        Session::put('message',$announcement->title." başlıklı duyuru ".$course->name.' isimli sınıfa başarıyla eklendi.');
-        return redirect()->route('courses.announcements.index',['course' => $course]);
+        Session::put('message', $announcement->title . " başlıklı duyuru " . $course->name . ' isimli sınıfa başarıyla eklendi.');
+        return redirect()->route('courses.announcements.index', ['course' => $course]);
     }
 
     /**
@@ -64,9 +66,9 @@ class AnnouncementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course,Announcement $announcement)
+    public function show(Course $course, Announcement $announcement)
     {
-        return view('instructor.course.announcement.detail',['course'=>$course,'announcement' => $announcement]);
+        return view('instructor.course.announcement.detail', ['course' => $course, 'announcement' => $announcement]);
     }
 
     /**
@@ -77,7 +79,7 @@ class AnnouncementController extends Controller
      */
     public function edit(Course $course, Announcement $announcement)
     {
-        return view('instructor.course.announcement.edit',['course'=>$course,'announcement'=>$announcement]);
+        return view('instructor.course.announcement.edit', ['course' => $course, 'announcement' => $announcement]);
     }
 
     /**
@@ -101,8 +103,8 @@ class AnnouncementController extends Controller
 
         $announcement->save();
 
-        Session::put('message','Duyuru başarılı bir şekilde güncellendi.');
-       return redirect()->route('courses.announcements.show',['course'=>$course,'announcement'=>$announcement]);
+        Session::put('message', 'Duyuru başarılı bir şekilde güncellendi.');
+        return redirect()->route('courses.announcements.show', ['course' => $course, 'announcement' => $announcement]);
     }
 
     /**
@@ -113,6 +115,5 @@ class AnnouncementController extends Controller
      */
     public function destroy(Course $course, Announcement $announcement)
     {
-
     }
 }

@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
                 'name' => 'Turab',
                 'surname' => 'Karakaş',
                 'username' => 'karakasm18',
+                'email' => 'karakasm18@itu.edu.tr',
                 'password' => Hash::make('Mx8pkMe0FC')
             ],
             [
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
                 'name' => 'Akif',
                 'surname' => 'Mete',
                 'username' => 'mete16',
+                'email' => 'mete16@itu.edu.tr',
                 'password' => Hash::make('Nwakaeme61')
             ],
             [
@@ -36,6 +38,7 @@ class UserSeeder extends Seeder
                 'name' => 'Sultan',
                 'surname' => 'Erdoğan',
                 'username' => 'erdogan15',
+                'email' => 'erdogan15@itu.edu.tr',
                 'password' => Hash::make('Serdogan15')
             ],
             [
@@ -43,11 +46,12 @@ class UserSeeder extends Seeder
                 'name' => 'İzzet',
                 'surname' => 'Göksel',
                 'username' => 'gokseli10',
+                'email' => 'gokseli10@itu.edu.tr',
                 'password' => Hash::make('Gokseliz10')
             ]
         ];
 
-        foreach ($users as $user){
+        foreach ($users as $user) {
             User::create($user);
         }
     }

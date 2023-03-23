@@ -19,15 +19,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('surname');
             $table->string('username')->unique();
+            $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
-
         });
 
-        Schema::table('users', function (Blueprint $table){
+        Schema::table('users', function (Blueprint $table) {
             $table->foreign('role_id')->references('id')->on('roles');
         });
     }
