@@ -91,7 +91,13 @@ class AnnouncementController extends Controller
      */
     public function update(AnnouncementPostRequest $request, Course $course, Announcement $announcement)
     {
+        $isStatusChanged = false;
+
         $data = $request->validated();
+
+        if ($announcement->status == 'pending' && $data['status'] == 'active') {
+            $isStatusChanged = true;
+        }
 
         $announcement->course_id = $course->id;
 
@@ -102,6 +108,8 @@ class AnnouncementController extends Controller
         $announcement->status = $data['status'];
 
         $announcement->save();
+
+        AnnouncementShared::dispatchIf($isStatusChanged, $announcement, $course);
 
         Session::put('message', 'Duyuru başarılı bir şekilde güncellendi.');
         return redirect()->route('courses.announcements.show', ['course' => $course, 'announcement' => $announcement]);
