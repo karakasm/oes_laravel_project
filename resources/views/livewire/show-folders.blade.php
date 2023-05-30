@@ -45,7 +45,7 @@
                                 <th>Sıra</th>
                                 <th>İsim</th>
                                 <th>Uzantı</th>
-                                <th>Boyut(KB)</th>
+                                <th>Boyut</th>
                                 <th>İşlemler</th>
                             </tr>
                         </thead>
@@ -56,7 +56,11 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $folder->name }}</td>
                                 <td>{{ $folder->extension}}</td>
-                                <td>{{ $folder->size }}</td>
+                                @if (intdiv($folder->size,1000000) == 0)
+                                <td>{{ intdiv($folder->size,1000)." KB" }}</td>
+                                @else
+                                <td>{{ intdiv($folder->size,1000000)." MB" }}</td>
+                                @endif
                                 <td>
                                     <a href="#" type="button" class="btn btn-sm btn-danger">Sil</a>
                                     <a href="#" type="button" class="btn btn-sm btn-success">İndir</a>
