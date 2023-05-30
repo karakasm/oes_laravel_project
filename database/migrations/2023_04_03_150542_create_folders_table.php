@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('announcements', function (Blueprint $table) {
+        Schema::create('folders', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('course_id');
-            $table->string('title');
-            $table->text('content');
-            $table->enum('status', ["pending", "active"])->comment('pending:taslak,active:yayında');
+            $table->string('path');
+            $table->string('name')->nullable();
+            $table->string('extension')->nullable();
+            $table->unsignedBigInteger('size');
             $table->timestamps();
 
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('announcements');
+        Schema::dropIfExists('folders');
     }
 };

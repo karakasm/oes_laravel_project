@@ -17,11 +17,13 @@ class CourseController extends Controller
         $this->middleware(['course_auth']);
     }
 
-    public function index(Course $course){
+    public function index(Course $course)
+    {
         return view('instructor.course.index', ['course' => $course]);
     }
 
-    public function show(Course $course){
-        return view('instructor.course.detail',['course' => $course,'instructor'=>session('user')]);
+    public function show(Course $course)
+    {
+        return view('instructor.course.detail', ['course' => $course, 'instructor' => session('user')]);
     }
 }

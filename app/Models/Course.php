@@ -10,18 +10,26 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
-       'instructor_id','name','code','number','language','aim','content','credit','capacity','enrolled'
+        'instructor_id', 'name', 'code', 'number', 'language', 'aim', 'content', 'credit', 'capacity', 'enrolled'
     ];
 
-    public function days(){
-        return $this->belongsToMany(Day::class,'course_day')->withPivot('open_time', 'close_time','building','room')->orderBy('id')->withTimestamps();
+    public function days()
+    {
+        return $this->belongsToMany(Day::class, 'course_day')->withPivot('open_time', 'close_time', 'building', 'room')->orderBy('id')->withTimestamps();
     }
 
-    public function users() {
-       return $this->belongsToMany(User::class, 'course_user')->withTimestamps();
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'course_user')->withTimestamps();
     }
 
-    public function announcements(){
-        return $this->hasMany(Announcement::class)->orderBy('updated_at','desc');
+    public function announcements()
+    {
+        return $this->hasMany(Announcement::class)->orderBy('updated_at', 'desc');
+    }
+
+    public function folders()
+    {
+        return $this->hasMany(Folder::class)->orderBy('updated_at', 'desc');
     }
 }

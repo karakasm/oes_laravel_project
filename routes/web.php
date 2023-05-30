@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Instructor\AnnouncementController;
+use App\Http\Controllers\Instructor\FolderController;
 use App\Http\Controllers\Student\CourseController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,21 +18,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AuthController::class,'index'])->name('login');
-Route::post('login',[AuthController::class,'handleLogin'])->name('handle.login');
-Route::get('logout',[AuthController::Class,'handleLogout'])->middleware('auth')->name('handle.logout');
+Route::get('/', [AuthController::class, 'index'])->name('login');
+Route::post('login', [AuthController::class, 'handleLogin'])->name('handle.login');
+Route::get('logout', [AuthController::class, 'handleLogout'])->middleware('auth')->name('handle.logout');
 
 
-Route::prefix('student')->middleware(['auth','is_student'])->group(function () {
-    Route::view('index','student.index')->middleware('get_all_requirements_stu')->name('student.index');
+Route::prefix('student')->middleware(['auth', 'is_student'])->group(function () {
+    Route::view('index', 'student.index')->middleware('get_all_requirements_stu')->name('student.index');
 
     //Routes about courses
     Route::get('courses/{course}', [CourseController::class, 'index'])->name('student.course.index');
-    Route::get('courses/{course}/details',[CourseController::class,'show'])->name('student.course.detail');
+    Route::get('courses/{course}/details', [CourseController::class, 'show'])->name('student.course.detail');
 
     //Routes about announcement
-    Route::resource('courses.announcements',\App\Http\Controllers\Student\AnnouncementController::class)->only([
-        'index','show'
+    Route::resource('courses.announcements', \App\Http\Controllers\Student\AnnouncementController::class)->only([
+        'index', 'show'
     ])->names([
         'index' => 'student.courses.announcements.index',
         'show' => 'student.courses.announcements.show',
@@ -39,13 +40,16 @@ Route::prefix('student')->middleware(['auth','is_student'])->group(function () {
 });
 
 
-Route::prefix('instructor')->middleware(['auth','is_instructor'])->group(function (){
+Route::prefix('instructor')->middleware(['auth', 'is_instructor'])->group(function () {
     Route::view('index', 'instructor.index')->middleware('get_all_requirements_ins')->name('instructor.index');
 
     //Routes about courses
-    Route::get('courses/{course}',[\App\Http\Controllers\Instructor\CourseController::class,'index'])->name('instructor.course.index');
-    Route::get('courses/{course}/details', [\App\Http\Controllers\Instructor\CourseController::class,'show'])->name('instructor.course.detail');
+    Route::get('courses/{course}', [\App\Http\Controllers\Instructor\CourseController::class, 'index'])->name('instructor.course.index');
+    Route::get('courses/{course}/details', [\App\Http\Controllers\Instructor\CourseController::class, 'show'])->name('instructor.course.detail');
 
     //Routes about announcement
     Route::resource('courses.announcements', AnnouncementController::class);
+
+    //Routes about folders/files
+    Route::resource('courses.folders', FolderController::class);
 });
