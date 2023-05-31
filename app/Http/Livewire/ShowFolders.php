@@ -6,20 +6,30 @@ use App\Models\Folder;
 use App\Models\Course;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use Illuminate\Support\Str;
 
 class ShowFolders extends Component
 {
 
-
+    use WithPagination;
     use WithFileUploads;
 
+    protected $paginationTheme = 'bootstrap';
 
+
+    public $search;
+    public $page = 1;
     public Course $course;
     public $folders = [];
     public $iteration = 0;
 
     public $folder_id = '';
+
+    protected  $queryString = [
+        'search' => ['except' => '', 'as' => 's'],
+        'page' => ['except' => 1, 'as' => 'p'],
+    ];
 
     protected $rules = [
         'folders.*' => 'required|file',
@@ -53,7 +63,20 @@ class ShowFolders extends Component
 
     public function render()
     {
-        return view('livewire.show-folders', ['all' => Folder::where('course_id', $this->course->id)->orderBy('id', 'DESC')->get()]);
+        $query = Folder::query()->where('course_id', $this->course->id);
+        if ($this->search) {
+            $query->where('name', 'like', '%' . trim($this->search) . '%')->orderBy('created_at', 'desc');
+        }
+
+        // return view('livewire.show-folders', ['all' => Folder::where('course_id', $this->course->id)->orderBy('id', 'DESC')->get()]);
+        return view('livewire.show-folders', ['all' => $query->orderBy('created_at', 'DESC')->paginate(5)]);
+    }
+
+    public function updated($property)
+    {
+        if ($property === 'search') {
+            $this->resetPage();
+        }
     }
 
     public function download(Folder $folder)
