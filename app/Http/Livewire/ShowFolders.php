@@ -19,6 +19,8 @@ class ShowFolders extends Component
     public $folders = [];
     public $iteration = 0;
 
+    public $folder_id = '';
+
     protected $rules = [
         'folders.*' => 'required|file',
     ];
@@ -31,7 +33,7 @@ class ShowFolders extends Component
         foreach ($this->folders as $folder) {
 
             if (Folder::where('course_id', $this->course->id)->where('name', explode('.', $folder->getClientOriginalName())[0])->first()) {
-                session()->flash('warning', explode('.', $folder->getClientOriginalName())[0] . ' isimli dosya zaten mevcut.');
+                $this->dispatchBrowserEvent('fileAlreadyExist', ['message' => explode('.', $folder->getClientOriginalName())[0] . ' isimli dosya zaten mevcut.']);
             } else {
                 $folder->storeAs($this->course->id . '\\folders', explode('.', $folder->getClientOriginalName())[0] . '.' . $folder->guessExtension());
                 Folder::create([
@@ -42,7 +44,7 @@ class ShowFolders extends Component
                     'extension' => $folder->guessExtension(),
                     'size' => $folder->getSize()
                 ]);
-                session()->flash('success', explode('.', $folder->getClientOriginalName())[0] . ' isimli dosya başarılı bir şekilde yüklendi.');
+                $this->dispatchBrowserEvent('fileUploadSuccess', ['message' => explode('.', $folder->getClientOriginalName())[0] . ' isimli dosya başarılı bir şekilde yüklendi.']);
             }
             $this->folders = null;
             $this->iteration++;
@@ -61,7 +63,25 @@ class ShowFolders extends Component
         if (file_exists($path)) {
             return response()->download($path);
         } else {
-            session()->flash('file-not-found', 'İlgili Dosya Bulunamamaktır.');
+            $this->dispatchBrowserEvent('fileNotFound', ['message' => 'İlgili Dosya Bulunamamaktadır.']);
         }
+    }
+
+    public function delete($id)
+    {
+        $this->folder_id = $id;
+    }
+    public function deleteConfirm()
+    {
+
+        $tmpFolder = Folder::where('id', $this->folder_id)->first();
+        $path = $tmpFolder->path . $tmpFolder->name . '.' . $tmpFolder->extension;
+        if (file_exists($path)) {
+            unlink($path);
+        }
+
+
+        Folder::where('id', $this->folder_id)->delete();
+        $this->dispatchBrowserEvent('show-delete-alert', ['message' => 'Dosya başarılı bir şekilde silindi.']);
     }
 }

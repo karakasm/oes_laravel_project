@@ -9,16 +9,6 @@
                 </button>
             </div>
             @error ('folders.*') <span class="text-danger mt-1">Lütfen, dosya seçiniz.</span> @enderror
-            @if(session()->has('warning'))
-            <span class="text-warning my-1">
-                {{ session('warning') }}
-            </span>
-            @endif
-            @if(session()->has('success'))
-            <span class="text-success my-1">
-                {{ session('success') }}
-            </span>
-            @endif
         </form>
     </div>
     <div class="row justify-content-center mt-3">
@@ -63,14 +53,11 @@
                                 <td>{{ intdiv($folder->size,1000000)." MB" }}</td>
                                 @endif
                                 <td>
-                                    <a href="#" type="button" class="btn btn-sm btn-danger">Sil</a>
+                                    <a href="#" type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        wire:click.prevent="delete({{$folder->id}})">Sil</a>
                                     <a href="#" type="button" wire:loading.class='disabled'
                                         wire:click='download({{ $folder }})' class="btn btn-sm btn-success">İndir</a>
-                                    @if(session()->has('file-not-found'))
-                                    <span class="text-warning my-1">
-                                        {{ session('file-not-found') }}
-                                    </span>
-                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -89,5 +76,26 @@
         </div>
     </div>
 
-
+    <!-- Modal -->
+    <div class="modal fade" wire:ignore.self id="deleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Silme İşlemi Onaylama</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Dosyayı silmek istediğine emin misin?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Hayır, Silme</button>
+                    <button type="button" id="modal-delete-btn" wire:click.prevent="deleteConfirm()"
+                        class="btn btn-sm btn-danger" data-bs-dismiss="modal">
+                        Evet, Sil
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
