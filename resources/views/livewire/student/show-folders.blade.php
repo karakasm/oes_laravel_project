@@ -62,5 +62,9 @@
 
             </div>
         </div>
+        <div class="d-flex align-items-center justify-content-center mt-2" wire:target="search"
+            wire:loading.class="d-none">
+            {{ $folders->links() }}
+        </div>
     </div>
 </div>
