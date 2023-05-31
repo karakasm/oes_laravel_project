@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Instructor\AnnouncementController;
 use App\Http\Controllers\Instructor\FolderController;
 use App\Http\Controllers\Student\CourseController;
+use App\Http\Controllers\Student\FolderController as StudentFolderController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -37,6 +38,9 @@ Route::prefix('student')->middleware(['auth', 'is_student'])->group(function () 
         'index' => 'student.courses.announcements.index',
         'show' => 'student.courses.announcements.show',
     ]);
+
+    //Routes about folders
+    Route::get('courses/{course}/folders', [StudentFolderController::class, 'index'])->name('student.courses.folders.index');
 });
 
 
@@ -50,6 +54,6 @@ Route::prefix('instructor')->middleware(['auth', 'is_instructor'])->group(functi
     //Routes about announcement
     Route::resource('courses.announcements', AnnouncementController::class);
 
-    //Routes about folders/files
+    //Routes about folders
     Route::resource('courses.folders', FolderController::class);
 });

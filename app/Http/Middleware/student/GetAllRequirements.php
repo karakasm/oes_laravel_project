@@ -22,20 +22,34 @@ class GetAllRequirements
         $courses = User::findOrFail(\session('user.user_id'))->courses;
 
         $announcements = new Collection();
-        foreach ($courses as $course){
-            $announcements = $announcements->merge($course->announcements->where('status','active')->all());
+        $folders = new Collection();
+
+        foreach ($courses as $course) {
+            $announcements = $announcements->merge($course->announcements->where('status', 'active')->all());
         }
 
-        if($courses){
-            Session::put('courses',$courses);
-        }else{
-            Session::put('courses',null);
+        foreach ($courses as $course) {
+            $folders = $folders->merge($course->folders->all());
         }
 
-        if($announcements){
-            Session::put('announcements',$announcements->sortByDesc('updated_at')->take(3));
-        }else{
-            Session::put('announcements',null);
+
+        if ($courses) {
+            Session::put('courses', $courses);
+        } else {
+            Session::put('courses', null);
+        }
+
+        if ($announcements) {
+            Session::put('announcements', $announcements->sortByDesc('updated_at')->take(3));
+        } else {
+            Session::put('announcements', null);
+        }
+
+
+        if ($folders) {
+            Session::put('folders', $folders->sortByDesc('created_at')->take(3));
+        } else {
+            Session::put('folders', null);
         }
 
         return $next($request);
