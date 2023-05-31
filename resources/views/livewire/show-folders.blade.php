@@ -8,7 +8,10 @@
                     Yükle
                 </button>
             </div>
-            @error ('folders.*') <span class="text-danger mt-1">Lütfen, dosya seçiniz.</span> @enderror
+            <div class="text-warning my-1" wire:loading wire:target='folders'>
+                Bekleyiniz...
+            </div>
+            @error ('folders.*') <div class="text-danger mt-1">{{ $message }}</div> @enderror
         </form>
     </div>
     <div class="row justify-content-center mt-3">

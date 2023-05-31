@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\FolderShared;
 use App\Models\Folder;
 use App\Models\Course;
 use Livewire\Component;
@@ -32,32 +33,38 @@ class ShowFolders extends Component
     ];
 
     protected $rules = [
-        'folders.*' => 'required|file',
+        'folders.*' => 'required|file|max:102400', //max 100MB;
     ];
 
     public function save()
     {
-        $this->validate();
+        if (empty($this->folders)) {
+            $this->dispatchBrowserEvent('NeedFileToUpload', ['message' => 'Lütfen Dosya Seçiniz.']);
+        } else {
 
+            $this->validate();
 
-        foreach ($this->folders as $folder) {
+            foreach ($this->folders as $folder) {
 
-            if (Folder::where('course_id', $this->course->id)->where('name', explode('.', $folder->getClientOriginalName())[0])->first()) {
-                $this->dispatchBrowserEvent('fileAlreadyExist', ['message' => explode('.', $folder->getClientOriginalName())[0] . ' isimli dosya zaten mevcut.']);
-            } else {
-                $folder->storeAs($this->course->id . '\\folders', explode('.', $folder->getClientOriginalName())[0] . '.' . $folder->guessExtension());
-                Folder::create([
-                    'course_id' => $this->course->id,
-                    'uuid' => Str::orderedUuid(),
-                    'path' => storage_path('app') . '\\' . $this->course->id . '\\folders\\',
-                    'name' => explode('.', $folder->getClientOriginalName())[0],
-                    'extension' => $folder->guessExtension(),
-                    'size' => $folder->getSize()
-                ]);
-                $this->dispatchBrowserEvent('fileUploadSuccess', ['message' => explode('.', $folder->getClientOriginalName())[0] . ' isimli dosya başarılı bir şekilde yüklendi.']);
+                if (Folder::where('course_id', $this->course->id)->where('name', explode('.', $folder->getClientOriginalName())[0])->first()) {
+                    $this->dispatchBrowserEvent('fileAlreadyExist', ['message' => explode('.', $folder->getClientOriginalName())[0] . ' isimli dosya zaten mevcut.']);
+                } else {
+                    $folder->storeAs($this->course->id . '\\folders', explode('.', $folder->getClientOriginalName())[0] . '.' . $folder->guessExtension());
+                    $registeredFolder = Folder::create([
+                        'course_id' => $this->course->id,
+                        'uuid' => Str::orderedUuid(),
+                        'path' => storage_path('app') . '\\' . $this->course->id . '\\folders\\',
+                        'name' => explode('.', $folder->getClientOriginalName())[0],
+                        'extension' => $folder->guessExtension(),
+                        'size' => $folder->getSize()
+                    ]);
+                    $this->dispatchBrowserEvent('fileUploadSuccess', ['message' => explode('.', $folder->getClientOriginalName())[0] . ' isimli dosya başarılı bir şekilde yüklendi.']);
+
+                    FolderShared::dispatch($registeredFolder, $this->course);
+                }
+                $this->folders = null;
+                $this->iteration++;
             }
-            $this->folders = null;
-            $this->iteration++;
         }
     }
 

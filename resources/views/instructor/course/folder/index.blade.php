@@ -62,6 +62,13 @@
                 $('.toast').toast('show');
             });
 
+            window.addEventListener('NeedFileToUpload', function(data){
+                $('.toast-body').text(data.detail.message)
+                $('.toast').toast({delay:5000})
+                $('.toast').toast('show');
+            });
+
+
         });
 
 

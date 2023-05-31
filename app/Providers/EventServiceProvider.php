@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\AnnouncementShared;
+use App\Events\FolderShared;
 use App\Listeners\SendAnnouncementSharingEmail;
+use App\Listeners\SendFolderSharingEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,9 +23,15 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
 
-        AnnouncementShared::class =>[
-          SendAnnouncementSharingEmail::class,
+        AnnouncementShared::class => [
+            SendAnnouncementSharingEmail::class,
         ],
+
+        FolderShared::class => [
+            SendFolderSharingEmail::class,
+        ],
+
+
     ];
 
     /**
