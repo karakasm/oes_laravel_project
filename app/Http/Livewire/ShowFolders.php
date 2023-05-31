@@ -33,7 +33,7 @@ class ShowFolders extends Component
             if (Folder::where('course_id', $this->course->id)->where('name', explode('.', $folder->getClientOriginalName())[0])->first()) {
                 session()->flash('warning', explode('.', $folder->getClientOriginalName())[0] . ' isimli dosya zaten mevcut.');
             } else {
-                $folder->storeAs('folders', explode('.', $folder->getClientOriginalName())[0] . '.' . $folder->guessExtension());
+                $folder->storeAs($this->course->id . '\\folders', explode('.', $folder->getClientOriginalName())[0] . '.' . $folder->guessExtension());
                 Folder::create([
                     'course_id' => $this->course->id,
                     'uuid' => Str::orderedUuid(),
@@ -52,5 +52,16 @@ class ShowFolders extends Component
     public function render()
     {
         return view('livewire.show-folders', ['all' => Folder::where('course_id', $this->course->id)->orderBy('id', 'DESC')->get()]);
+    }
+
+    public function download(Folder $folder)
+    {
+        $path = $folder->path . $folder->name . '.' . $folder->extension;
+
+        if (file_exists($path)) {
+            return response()->download($path);
+        } else {
+            session()->flash('file-not-found', 'İlgili Dosya Bulunamamaktır.');
+        }
     }
 }

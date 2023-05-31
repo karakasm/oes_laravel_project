@@ -40,7 +40,13 @@
                             <td>{{ intdiv($folder->size,1000000)." MB" }}</td>
                             @endif
                             <td>
-                                <a href="#" type="button" class="btn btn-sm btn-success">İndir</a>
+                                <a href="#" type="button" wire:loading.class='disabled'
+                                    wire:click='download({{ $folder }})' class="btn btn-sm btn-success">İndir</a>
+                                @if(session()->has('file-not-found'))
+                                <span class="text-warning my-1">
+                                    {{ session('file-not-found') }}
+                                </span>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

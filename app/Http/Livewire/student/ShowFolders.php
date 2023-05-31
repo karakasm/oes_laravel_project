@@ -13,4 +13,16 @@ class ShowFolders extends Component
     {
         return view('livewire.student.show-folders', ['folders' => Folder::where('course_id', $this->course->id)->orderBy('created_at', 'DESC')->get()]);
     }
+
+
+    public function download(Folder $folder)
+    {
+        $path = $folder->path . $folder->name . '.' . $folder->extension;
+
+        if (file_exists($path)) {
+            return response()->download($path);
+        } else {
+            session()->flash('file-not-found', 'İlgili Dosya Bulunamamaktır.');
+        }
+    }
 }

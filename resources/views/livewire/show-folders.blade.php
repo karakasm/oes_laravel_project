@@ -4,7 +4,8 @@
             <div class="input-group">
                 <input type="file" class="form-control shadow-none" wire:model="folders" id="upload{{ $iteration }}"
                     multiple>
-                <button class=" btn btn-primary" type="submit" wire:loading.class="disabled"> Yükle
+                <button class=" btn btn-primary" type="submit" wire:target='folders' wire:loading.class="disabled">
+                    Yükle
                 </button>
             </div>
             @error ('folders.*') <span class="text-danger mt-1">Lütfen, dosya seçiniz.</span> @enderror
@@ -63,7 +64,13 @@
                                 @endif
                                 <td>
                                     <a href="#" type="button" class="btn btn-sm btn-danger">Sil</a>
-                                    <a href="#" type="button" class="btn btn-sm btn-success">İndir</a>
+                                    <a href="#" type="button" wire:loading.class='disabled'
+                                        wire:click='download({{ $folder }})' class="btn btn-sm btn-success">İndir</a>
+                                    @if(session()->has('file-not-found'))
+                                    <span class="text-warning my-1">
+                                        {{ session('file-not-found') }}
+                                    </span>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
