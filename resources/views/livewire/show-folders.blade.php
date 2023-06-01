@@ -1,7 +1,7 @@
 <div class="row mt-2">
     <div class="col-12 col-md-6">
         <form wire:submit.prevent='save'>
-            <div class="input-group">
+            <div class="input-group input-group-sm mb-1">
                 <input type="file" class="form-control shadow-none" wire:model="folders" id="upload{{ $iteration }}"
                     multiple>
                 <button class=" btn btn-primary" type="submit" wire:target='folders' wire:loading.class="disabled">
@@ -15,9 +15,9 @@
         </form>
     </div>
     <div class="row justify-content-center mt-3">
-        <div class=" col-12">
-            <div class="card" style="transform: none;">
-                <div class="card-header d-flex align-items-center justify-content-between">
+        <div class=" col-12 col-md-10">
+            <div class="card border border-0" style="transform: none;">
+                <div class="card-header  border border-0 d-flex align-items-center justify-content-between">
                     <h4 class="text-primary me-3 me-sm-none">Dosyalar</h4>
                     <div class="input-group w-50">
                         <input type="text" wire:model.lazy="search" class="form-control shadow-none"
@@ -33,22 +33,22 @@
                     </div>
                 </div>
                 <div wire:loading.remove wire:target="search" class="card-body table-responsive">
-                    <table class="table table-striped">
-                        <thead>
+                    <table class="table table-striped table-sm align-middle">
+                        <thead class="text-center">
                             <tr>
                                 <th>Sıra</th>
-                                <th>İsim</th>
-                                <th>Uzantı</th>
+                                <th class="text-start">İsim</th>
+                                <th>Tür</th>
                                 <th>Boyut</th>
                                 <th>İşlemler</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-center">
                             @if(count($all))
                             @foreach ( $all as $folder )
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $folder->name }}</td>
+                                <td class="text-start">{{ $folder->name }}</td>
                                 <td>{{ $folder->extension}}</td>
                                 @if (intdiv($folder->size,1000000) == 0)
                                 <td>{{ intdiv($folder->size,1000)." KB" }}</td>
@@ -80,7 +80,6 @@
                 {{ $all->links() }}
             </div>
         </div>
-
     </div>
 
     <!-- Modal -->
