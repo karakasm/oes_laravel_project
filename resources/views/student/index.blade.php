@@ -16,7 +16,7 @@
         <div class="row gy-5 gx-3" id="cards">
             <div class="col-12 col-md-4">
                 <div class="card border-0 text-bg-success " style="transform: none;">
-                    <h5 class="card-header">
+                    <h5 class="card-header text-center">
                         Son Duyurular
                     </h5>
                     @if(count(session('announcements')))
@@ -25,12 +25,16 @@
                         <a href="{{route('student.courses.announcements.show',['course'=>session('courses')->where('id',$anno->course_id)->first(),'announcement'=>$anno])}}"
                             class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5>{{$anno->title}}</h5>
-                                <small
-                                    class="text-muted">{{$anno->updated_at->diffForHumans(\Illuminate\Support\Carbon::now())}}</small>
+                                <h5 class="text-truncate">{{$anno->title}}</h5>
                             </div>
-                            <small class="text-muted">{{$anno->course->code." ".$anno->course->number." -
-                                ".$anno->course->name." / CRN: ".$anno->course->id}}</small>
+                            <div class="d-flex flex-column align-items-start justify-content-between">
+                                <small class="text-muted d-inline-block text-truncate">{{$anno->course->code."
+                                    ".$anno->course->number." -
+                                    ".$anno->course->name." / CRN: ".$anno->course->id}}</small>
+
+                                <small
+                                    class="text-muted d-inline-block text-truncate">{{$anno->updated_at->diffForHumans(\Illuminate\Support\Carbon::now())}}</small>
+                            </div>
                         </a>
                         <hr class="m-0">
                     </div>
@@ -44,7 +48,7 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="card border-0 text-bg-dark " style="transform: none;">
-                    <h5 class="card-header">
+                    <h5 class="card-header text-center">
                         Son Dosyalar
                     </h5>
                     @if(count(session('folders')))
@@ -53,13 +57,14 @@
                         <a href="{{route('student.courses.folders.index',['course'=>session('courses')->where('id',$folder->course_id)->first()])}}"
                             class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5>{{$folder->name}}</h5>
-                                <small
-                                    class="text-muted d-inline-block text-truncate">{{$folder->created_at->diffForHumans(\Illuminate\Support\Carbon::now())}}</small>
+                                <h5 class="text-truncate">{{$folder->name}}</h5>
                             </div>
                             <div class="d-flex flex-column align-items-start justify-content-between">
-                                <small class="text-muted">{{$folder->course->code." ".$folder->course->number." -
+                                <small class="text-muted d-inline-block text-truncate">{{$folder->course->code."
+                                    ".$folder->course->number." -
                                     ".$folder->course->name." / CRN: ".$folder->course->id}}</small>
+                                <small
+                                    class="text-muted d-inline-block text-truncate">{{$folder->created_at->diffForHumans(\Illuminate\Support\Carbon::now())}}</small>
                             </div>
                         </a>
                         <hr class="m-0">
