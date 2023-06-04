@@ -25,17 +25,15 @@ class ShowAnnouncements extends Component
 
     public function render()
     {
-        $query = Announcement::query()->where('course_id', $this->course->id)
-            ->where('status', 'active');
-
         if ($this->search) {
-            $query->where('content', 'like', '%' . $this->search . '%')
-                ->orWhere('title', 'like', '%' . $this->search . '%')->orderBy('updated_at', 'desc');
+            return view('livewire.show-announcements', [
+                'announcements' => $this->course->announcements()->where('title', 'like', '%' . trim($this->search) . '%')->orderBy('updated_at', 'desc')->paginate(3)
+            ]);
+        } else {
+            return view('livewire.show-announcements', [
+                'announcements' => $this->course->announcements()->orderBy('updated_at', 'desc')->paginate(3)
+            ]);
         }
-
-        return view('livewire.student.show-announcements', [
-            'announcements' => $query->orderBy('updated_at', 'desc')->paginate(3)
-        ]);
     }
 
     public function updated($property)
