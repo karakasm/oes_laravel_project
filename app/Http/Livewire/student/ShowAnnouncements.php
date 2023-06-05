@@ -26,12 +26,12 @@ class ShowAnnouncements extends Component
     public function render()
     {
         if ($this->search) {
-            return view('livewire.show-announcements', [
-                'announcements' => $this->course->announcements()->where('title', 'like', '%' . trim($this->search) . '%')->orderBy('updated_at', 'desc')->paginate(3)
+            return view('livewire.student.show-announcements', [
+                'announcements' => $this->course->announcements()->where('status', 'active')->where('title', 'like', '%' . trim($this->search) . '%')->orderBy('updated_at', 'desc')->paginate(3)
             ]);
         } else {
-            return view('livewire.show-announcements', [
-                'announcements' => $this->course->announcements()->orderBy('updated_at', 'desc')->paginate(3)
+            return view('livewire.student.show-announcements', [
+                'announcements' => $this->course->announcements()->where('status', 'active')->orderBy('updated_at', 'desc')->paginate(3)
             ]);
         }
     }
