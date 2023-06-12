@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -54,5 +54,11 @@ class UserSeeder extends Seeder
         foreach ($users as $user) {
             User::create($user);
         }
+        User::factory()
+            ->count(11)
+            ->state(new Sequence(
+                ['role_id' => 2],
+            ))
+            ->create();
     }
 }

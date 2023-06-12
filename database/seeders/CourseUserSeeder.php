@@ -17,8 +17,8 @@ class CourseUserSeeder extends Seeder
     {
         $course_user = [
             [
-            'user_id' => 1,
-            'course_id' => 1,
+                'user_id' => 1,
+                'course_id' => 1,
             ],
             [
                 'user_id' => 1,
@@ -58,8 +58,19 @@ class CourseUserSeeder extends Seeder
             ],
         ];
 
-        foreach ($course_user as $item){
+        foreach ($course_user as $item) {
             DB::table('course_user')->insert($item);
+        }
+
+        for ($i = 5; $i < 16; $i++) {
+            for ($j = 1; $j <= 5; $j++) {
+                $course_user =
+                    [
+                        'user_id' => $i,
+                        'course_id' => $j,
+                    ];
+                DB::table('course_user')->insert($course_user);
+            }
         }
     }
 }
