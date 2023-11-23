@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
                 'surname' => 'Karakaş',
                 'username' => 'karakasm18',
                 'email' => 'karakasm18@itu.edu.tr',
-                'password' => Hash::make('Mx8pkMe0FC')
+                'password' => Hash::make('Karakasm18')
             ],
             [
                 'role_id' => 3,
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
                 'surname' => 'Mete',
                 'username' => 'mete16',
                 'email' => 'mete16@itu.edu.tr',
-                'password' => Hash::make('Nwakaeme61')
+                'password' => Hash::make('Akifmete16')
             ],
             [
                 'role_id' => 2,
