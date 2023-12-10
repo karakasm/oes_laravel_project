@@ -8,4 +8,13 @@ Eğitmenler;
 - Sınıflara özel duyurular paylaşabilir, 
 - Dersle ilgili dosya ve kaynaklar paylaşabilir, 
 - Ödevler verebilir, toplayabilir ve notlandırabilir, 
-- Sınavların notlandırmalarını yapabilir. 
+- Sınavların notlandırmalarını yapabilir.
+
+Öğrenciler; 
+-Duyuruları takip edebilir, 
+-Yüklenen dosyalara erişebilir, 
+-Ödev ve not bilgilerini görüntüleyebilir, 
+-Ödevlerin cevaplarını yükleyebilir. 
+
+# Varlık İlişki Diyagramı
+
