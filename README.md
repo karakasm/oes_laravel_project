@@ -17,4 +17,5 @@ Eğitmenler;
 -Ödevlerin cevaplarını yükleyebilir. 
 
 # Varlık İlişki Diyagramı
+![Varlık İlişki Diyagramı](/githubResimler/db-scheme.png)
 
