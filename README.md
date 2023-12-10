@@ -1,5 +1,5 @@
 # Çevrimiçi Eğitim Sistemi
-Bitirme projesi için Html, Css, Javascript, Bootstrap, PHP, Laravel, Livewire ve MySQL teknolojileri kullanılarak bir çevrimiçi eğitim sistemi uygulamas geliştirilmiştir.
+Bitirme projesi için Html, Css, Javascript, Bootstrap, PHP, Laravel, Livewire ve MySQL teknolojileri kullanılarak bir çevrimiçi eğitim sistemi uygulaması geliştirilmiştir.
 
 # Proje Amacı
 Bu çalışmanın amacı, güncel web teknolojilerinden yararlanarak eğitmenlere ve öğrencilere çevrimiçi ortamda uzaktan öğretme ve öğrenme imkânı sağlayan bir web sitesi tasarlamaktır.  Uygulama, temelde iki tip kullanıcıya açıktır. Bunlardan biri eğitmenler diğeri ise öğrencilerdir. Uygulama içerisinde kullanıcılara çeşitli imkanlar sunulmuştur. Bu imkanlar sayesinde; 
